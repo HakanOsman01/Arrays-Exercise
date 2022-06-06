@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace _10.LadyBugs
@@ -19,52 +19,100 @@ namespace _10.LadyBugs
                     field[index] = 1;
                 }
             }
-            string command;
-            while ((command = Console.ReadLine()) != "end")
+            string command=Console.ReadLine();
+            bool isLenghtUnderZero = false;
+            while (command != "end")
             {
-                string[] cmdArgs = command.
-                Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .ToArray();
-                int initinalIndex = int.Parse(cmdArgs[0]);
-                string direction = cmdArgs[1];
-                int flyLenght = int.Parse(cmdArgs[2]);
-                if (initinalIndex < 0 || initinalIndex >= field.Length)
+                string[] ladyBugsCommands = command
+                    .Split(' ',StringSplitOptions.RemoveEmptyEntries)
+                    .ToArray();
+                int index = int.Parse(ladyBugsCommands[0]);
+                string direction = ladyBugsCommands[1];
+                int lenght = int.Parse(ladyBugsCommands[2]);
+                if(index<0 || index >= field.Length)
                 {
+                    command = Console.ReadLine();
                     continue;
                 }
-                if (field[initinalIndex] == 0)
+                if (field[index]!= 1)
                 {
+                    command = Console.ReadLine();
                     continue;
                 }
-                field[initinalIndex] = 0;
-                int nextIndex = initinalIndex;
-                while (true)
+                if (lenght < 0)
                 {
+                    isLenghtUnderZero = true;
                     if (direction == "right")
                     {
-                        nextIndex += flyLenght;
+                        direction = "left";
                     }
-                    else if (direction == "left")
+                    else
                     {
-                        nextIndex -= flyLenght;
+                        direction = "right";
                     }
-                    if (nextIndex < 0 || nextIndex >= field.Length)
-                    {
-                        break;
-                    }
-                    if (field[initinalIndex] == 0)
-                    {
-                        break;
-                    }
-
                 }
 
-                if (nextIndex >= 0 && nextIndex < field.Length)
+                field[index] = 0;
+
+                if (direction == "right")
                 {
-                    field[nextIndex] = 1;
+                    if (isLenghtUnderZero)
+                    {
+                        lenght *= -1;
+                    }
+                    
+                    while (true)
+                    {
+                       
+                        
+                        index += lenght;
+
+                        if (index >= field.Length)
+                        {
+                            break;
+                        }
+                        if (field[index] == 0)
+                        {
+                            field[index] = 1;
+                            break;
+                        }else if (field[index] != 0)
+                        {
+                            continue;
+                        }
+                    }
+                }else if (direction == "left")
+                {
+                    
+                    while (true)
+                        
+                    {
+                       
+                        
+                        index -=lenght;
+
+                        if (index < 0)
+                        {
+                            break;
+                        }
+                        if (field[index] == 0)
+                        {
+                            field[index] = 1;
+                            break;
+                        }
+                        else if (field[index] != 0)
+                        {
+                            continue;
+                        }
+                    }
+                  
                 }
+                
+                command = Console.ReadLine();
             }
-            Console.WriteLine(string.Join(' ', field));
+            string output = string.Join(' ', field);
+            Console.WriteLine(output);
+           
         }
     }
 }
+
