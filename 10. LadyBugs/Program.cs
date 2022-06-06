@@ -53,61 +53,50 @@ namespace _10.LadyBugs
                 }
 
                 field[index] = 0;
-
-                if (direction == "right")
+                while (true)
                 {
-                    if (isLenghtUnderZero)
+                    if (direction == "right")
                     {
-                        lenght *= -1;
-                    }
-                    
-                    while (true)
-                    {
-                       
-                        
+                        if (isLenghtUnderZero)
+                        {
+                            lenght *= -1;
+                        }
                         index += lenght;
-
                         if (index >= field.Length)
                         {
                             break;
                         }
-                        if (field[index] == 0)
-                        {
-                            field[index] = 1;
-                            break;
-                        }else if (field[index] != 0)
-                        {
-                            continue;
-                        }
-                    }
-                }else if (direction == "left")
-                {
-                    
-                    while (true)
+                            if (field[index] == 0)
+                            {
+                                field[index] = 1;
+                               break;
+                            }
+                            else if (field[index] != 0)
+                            {
+                                continue;
+                            }
                         
-                    {
-                       
-                        
-                        index -=lenght;
-
-                        if (index < 0)
-                        {
-                            break;
-                        }
-                        if (field[index] == 0)
-                        {
-                            field[index] = 1;
-                            break;
-                        }
-                        else if (field[index] != 0)
-                        {
-                            continue;
-                        }
                     }
-                  
+                    else if(direction=="left")
+                    { 
+                            index -= lenght;
+                            if (index < 0)
+                            {
+                                break;
+                            }
+                            if (field[index] == 0)
+                            {
+                                field[index] = 1;
+                                break;
+                            }
+                            else if (field[index] != 0)
+                            {
+                                continue;
+                            }
+                    }
                 }
                 
-                command = Console.ReadLine();
+              command = Console.ReadLine();
             }
             string output = string.Join(' ', field);
             Console.WriteLine(output);
